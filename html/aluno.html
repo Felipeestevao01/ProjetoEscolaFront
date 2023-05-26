@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Alunos</title>
+  </head>
+  <body>
+    <button>Adicionar</button>
+    <table id = "cabecalho_alunos">
+      <thead>
+      <tr >
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Data Nascimento</th>
+        <th>Cpf</th>
+        <th>Endereco</th>
+        <th>Email</th>
+        <th>Numero Faltas</th>
+        <th>Açoes</th>
+      </tr>
+      </thead>
+      <tbody id = "linha_aluno">
+
+      </tbody>
+    </table>
+    <form style="display: none;" id="formulario" class="formulario_editar" action="" method="POST">
+
+      <label for="GET-name">Id:<span id="id_span"></span></label>
+      <input type="hidden" class="id_input" type="text" name="name">
+
+      <label for="GET-name">Nome:</label>
+      <input class="nome_input" type="text" name="name">
+
+      <label for="GET-Sobrenome">Sobrenome:</label>
+      <input class="sobrenome_input" type="text" name="Sobrenome">
+
+      <label for="GET-DataNascimento">Data Nascimento:</label>
+      <input class="data_nascimento_input" type="text" name="DataNascimento">
+
+      <label for="GET-Cpf">Cpf:</label>
+      <input class="cpf_input" type="text" name="Cpf">
+
+      <label for="GET-endereco">Endereço:</label>
+      <input class="endereco_input" type="text" name="endereco">
+
+      <label for="GET-email">Email:</label>
+      <input class="email_input" type="text" name="email">
+
+      <label for="GET-numerofaltas">NumeroFaltas:</label>
+      <input class="numerofaltas_input" type="text" name="numerofaltas">
+
+      <button type="submit" class="botao_salvar">Salvar</button>
+    </form>
+
+  </body>
+  <script src="../javascript/alunos.js"></script>
+</html>
