@@ -2,17 +2,36 @@ window.onload = async function (e) {
   let url = "http://localhost:8001/aluno";
   let response = await fetch(url);
   let alunos = await response.json();
+  
+  function formatarDataHoraBrasileira(dataHoraString) {
+    let dataHora = new Date(dataHoraString);
+  
+    let dia = dataHora.getDate();
+    let mes = dataHora.getMonth() + 1;
+    let ano = dataHora.getFullYear();
+    let horas = dataHora.getHours();
+    let minutos = dataHora.getMinutes();
+  
+    // Formatação com zero à esquerda para valores menores que 10
+    dia = dia < 10 ? '0' + dia : dia;
+    mes = mes < 10 ? '0' + mes : mes;
+    horas = horas < 10 ? '0' + horas : horas;
+    minutos = minutos < 10 ? '0' + minutos : minutos;
+  
+    let dataFormatada = dia + '/' + mes + '/' + ano;
+    let horaFormatada = horas + ':' + minutos;
+  
+    return dataFormatada + ' ' + horaFormatada;
+  }
 
-  for (let i = 0; i <= alunos.length; i++) {
-
-    let alunoAtual = alunos[i];
-
+  alunos.forEach(alunoAtual => {
+    // ---- Pegando os alunos da response e criando a linha ---- //
     let linhaAluno = document.createElement("tr");
 
-    //Separar a data da hora.
-    let dataNascimentoConvertida = alunoAtual.DataAniversario.split("T")[0];
-
-    // Criando as colunas da pagina aluno.
+    // ---- Separando a data da hora ----//
+    let dataNascimentoConvertida = alunoAtual.DataAniversario ? formatarDataHoraBrasileira(alunoAtual.DataAniversario).split(" ")[0] : ""
+    
+    // ---- Criando as colunas ---- //
     let tdId = document.createElement("td");
     let tdNome = document.createElement("td");
     let tdSobrenome = document.createElement("td");
@@ -23,53 +42,12 @@ window.onload = async function (e) {
     let tdNumeroFaltas = document.createElement("td");
     let tdAcoes = document.createElement("td");
 
-    // Criando os botoes de Editar/Deletar
-    let botaoEditar = document.createElement("button");
-    botaoEditar.innerText = "Editar";
-    botaoEditar.classList.add('botao_editar')
-    botaoEditar.addEventListener('click', async function(event){
-      let tr = this.parentNode.parentNode
-      
-      let id = tr.children[0].innerHTML
+    // ---- Adicionando atributos ---- //
+    linhaAluno.classList.add("tr_linha")
+    //tdId.setAttribute("")
+    tdNome.classList.add("td_nome")
 
-      let urlAluno = `http://localhost:8001/aluno/${id}`;
-      let responseAluno = await fetch(urlAluno);
-      let aluno = await responseAluno.json();
-
-      let dataAniversarioConvertida = aluno.DataAniversario.split('T', [1])
-
-      //Deixar o form Visivel.
-      let formulario = document.querySelector('#formulario')
-      formulario.removeAttribute("style")
-
-      // inserir os valores nas celulas do form.
-      let idInput = document.querySelector('.id_input')
-      idInput.value = aluno.Id
-      let idSpan = document.querySelector('#id_span')
-      idSpan.innerHTML = aluno.Id
-      let nomeInput = document.querySelector('.nome_input')
-      nomeInput.value = aluno.Nome
-      let sobrenomeInput = document.querySelector('.sobrenome_input')
-      sobrenomeInput.value = aluno.Sobrenome
-      let dataNascimentoInput = document.querySelector('.data_nascimento_input')
-      dataNascimentoInput.value = dataAniversarioConvertida
-      let cpfInput = document.querySelector('.cpf_input')
-      cpfInput.value = aluno.Cpf
-      let enderecoInput = document.querySelector('.endereco_input')
-      enderecoInput.value = aluno.Endereco
-      let emailInput = document.querySelector('.email_input')
-      emailInput.value = aluno.Email
-      let numeroFaltasInput = document.querySelector('.numerofaltas_input')
-      numeroFaltasInput.value = aluno.NumeroFaltas  
-    })
-
-    let botaoDeletar = document.createElement("button");
-    botaoDeletar.innerText = "Deletar";
-    botaoDeletar.classList.add('botao_deletar')
-    tdAcoes.appendChild(botaoEditar);
-    tdAcoes.appendChild(botaoDeletar);
-
-    // Pegando os valores do banco.
+    // ---- Pegando os valores do BD ---- //
     tdId.innerHTML = alunoAtual.Id;
     tdNome.innerHTML = alunoAtual.Nome;
     tdSobrenome.innerHTML = alunoAtual.Sobrenome;
@@ -79,7 +57,7 @@ window.onload = async function (e) {
     tdEmail.innerHTML = alunoAtual.Email;
     tdNumeroFaltas.innerHTML = alunoAtual.NumeroFaltas;
 
-    // Inserindo os valores nas celulas.
+    // ---- Inserindo os valores nas celulas ---- //
     linhaAluno.appendChild(tdId);
     linhaAluno.appendChild(tdNome);
     linhaAluno.appendChild(tdSobrenome);
@@ -90,54 +68,112 @@ window.onload = async function (e) {
     linhaAluno.appendChild(tdNumeroFaltas);
     linhaAluno.appendChild(tdAcoes);
 
+    // ---- Inserindo os alunos na tabela ---- //
     let tabelaAluno = document.querySelector("#linha_aluno");
     tabelaAluno.appendChild(linhaAluno);
 
-    botaoDeletar.addEventListener('click', async function(event){
-      event.preventDefault()
-      let removerLinha = linhaAluno
-      let id = alunoAtual.Id
-      console.log(id)
+    // ---- Criando o botão de Editar ---- //
+    let botaoEditar = document.createElement("button");
+    botaoEditar.innerText = "Editar";
+    botaoEditar.classList.add("botao_editar");
+    botaoEditar.classList.add("btn")
+    botaoEditar.classList.add("btn-primary")
+    botaoEditar.classList.add("btn-sm")
+    tdAcoes.appendChild(botaoEditar);
+    botaoEditar.addEventListener("click", async function (event) {
+      // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
+      let tr = this.parentNode.parentNode;
+      let id = tr.children[0].innerHTML;
+      let urlAluno = `http://localhost:8001/aluno/${id}`;
+      let responseAluno = await fetch(urlAluno);
+      let aluno = await responseAluno.json();
+      let dataAniversarioConvertida = formatarDataHoraBrasileira(alunoAtual.DataAniversario).split(" ")[0];
 
-      let urlDeletarAluno = ``
-    })
+      // ---- Deixar o formulário de editar Visivel ---- //
+      let formularioAlunos = document.querySelector("#formularioAlunos");
+      formularioAlunos.removeAttribute("style");
 
-  }
-};
- 
-// Selecionando o form.
-let formulario = document.querySelector('#formulario')
+      // ---- Selecionando as células ---- //
+      let idInput = document.querySelector(".id_input");
+      let idSpan = document.querySelector("#id_span");
+      let nomeInput = document.querySelector(".nome_input");
+      let sobrenomeInput = document.querySelector(".sobrenome_input");
+      let dataNascimentoInput = document.querySelector(".data_nascimento_input");
+      let cpfInput = document.querySelector(".cpf_input");
+      let enderecoInput = document.querySelector(".endereco_input");
+      let emailInput = document.querySelector(".email_input");
+      let numeroFaltasInput = document.querySelector(".numerofaltas_input");
 
+      // ---- Inserindo valores nas celulas do formulário de editar ---- //
+      idInput.value = aluno.Id;
+      idSpan.innerHTML = aluno.Id;
+      nomeInput.value = aluno.Nome;
+      sobrenomeInput.value = aluno.Sobrenome;
+      dataNascimentoInput.value = dataAniversarioConvertida;
+      cpfInput.value = aluno.Cpf;
+      enderecoInput.value = aluno.Endereco;
+      emailInput.value = aluno.Email;
+      numeroFaltasInput.value = aluno.NumeroFaltas;
+    });
 
-formulario.addEventListener('submit', async function(event){
-  event.preventDefault()
-  let id = this[0].value
-  
-  let aluno = {
-    Id: document.querySelector('.id_input').value,
-    Nome: document.querySelector('.nome_input').value,
-    Sobrenome: document.querySelector('.sobrenome_input').value,
-    DataAniversario: document.querySelector('.data_nascimento_input').value,
-    Cpf: document.querySelector('.cpf_input').value,
-    Endereco: document.querySelector('.endereco_input').value,
-    Email: document.querySelector('.email_input').value,
-    NumeroFaltas: document.querySelector('.numerofaltas_input').value
-  }
-  let alunoObjetoJson = JSON.stringify(aluno)
+    // ---- Criando o botão Deletar ---- //
+    let botaoDeletar = document.createElement("button");
+    botaoDeletar.innerText = "Deletar";
+    botaoDeletar.classList.add("botao_deletar");
+    botaoDeletar.classList.add("btn")
+    botaoDeletar.classList.add("btn-danger")
+    botaoDeletar.classList.add("btn-sm")
+    tdAcoes.appendChild(botaoDeletar);
 
-  let urlAtualizarAluno = `http://localhost:8001/aluno/${id}/edit`
-  let responseObj = await fetch(urlAtualizarAluno, {
-    method: 'POST',
-    body: alunoObjetoJson
+    // ----- Função no botão para deletar o aluno selecionado ---- //
+    botaoDeletar.addEventListener("click", async function (event) {
+      event.preventDefault();
+      linhaAluno.remove();
+      alunoObjetoJson = JSON.stringify(alunoAtual);
+      let urlDeletarAluno = `http://localhost:8001/aluno/delete`;
+      let responseObj = await fetch(urlDeletarAluno, {
+        method: "DELETE",
+        body: alunoObjetoJson,
+      });
+    });
   });
-  let jsonObj = await responseObj.json()
+};
 
-  if(jsonObj.Status == "sucesso"){
+// ---- Selecionando o formulário editar ---- //
+let formularioAlunos = document.querySelector("#formularioAlunos");
 
-    let tabelaAluno = document.querySelector("#cabecalho_alunos");
-
-    for(let i = 0; i < tabelaAluno.length; i++){
-      let alunoAtualizado = tabelaAluno[i]
-    }
+// ---- Função para atualizar o aluno selecionado ---- //
+formularioAlunos.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  let id = this[0].value;
+  let aluno = {
+    Id: document.querySelector(".id_input").value,
+    Nome: document.querySelector(".nome_input").value,
+    Sobrenome: document.querySelector(".sobrenome_input").value,
+    DataAniversario: document.querySelector(".data_nascimento_input").value,
+    Cpf: document.querySelector(".cpf_input").value,
+    Endereco: document.querySelector(".endereco_input").value,
+    Email: document.querySelector(".email_input").value,
+    NumeroFaltas: document.querySelector(".numerofaltas_input").value,
+  };
+  let alunoObjetoJson = JSON.stringify(aluno);
+  let urlAtualizarAluno = `http://localhost:8001/aluno/${id}/edit`;
+  let responseObj = await fetch(urlAtualizarAluno, {
+    method: "POST",
+    body: alunoObjetoJson,
+  });
+  
+  // ---- Convertendo o alunoJson em Objeto ---- //
+  aluno = JSON.parse(alunoObjetoJson)
+  if(id == aluno.Id){
   }
-})
+});
+
+// Selecionando o botão adicionar.
+let botaoAdicionar = document.getElementById("botao_adicionar");
+
+// Adiciona o evento de clique ao botão
+botaoAdicionar.addEventListener("click", function () {
+  // Redireciona para a nova página
+  window.location.href = "cadastroAluno.html";
+});

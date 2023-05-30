@@ -1,16 +1,9 @@
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+.cabecalho_alunos {
+  font-size: 36px;
+  font-weight: bold;
+  color: #070404;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Arial", sans-serif; 
+}
