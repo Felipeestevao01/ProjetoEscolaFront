@@ -162,12 +162,21 @@ formularioAlunos.addEventListener("submit", async function (event) {
     method: "POST",
     body: alunoObjetoJson,
   });
-  
-  // ---- Convertendo o alunoJson em Objeto ---- //
-  aluno = JSON.parse(alunoObjetoJson)
-  if(id == aluno.Id){
-  }
-});
+  let LinhasAlunos = document.querySelectorAll('tr')
+  for(i = 0 ; i < LinhasAlunos.length; i++){
+    let idAlunos = LinhasAlunos[i].children[0].innerHTML
+    if(id == idAlunos){
+        LinhasAlunos[i].children[1].innerHTML = aluno.Nome
+        LinhasAlunos[i].children[2].innerHTML = aluno.Sobrenome
+        LinhasAlunos[i].children[3].innerHTML = aluno.DataAniversario
+        LinhasAlunos[i].children[4].innerHTML = aluno.Cpf
+        LinhasAlunos[i].children[5].innerHTML = aluno.Endereco
+        LinhasAlunos[i].children[6].innerHTML = aluno.Email
+        LinhasAlunos[i].children[7].innerHTML = aluno.NumeroFaltas
+        break;
+      }  
+    }
+  });
 
 // Selecionando o botão adicionar.
 let botaoAdicionar = document.getElementById("botao_adicionar");
