@@ -6,20 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css">
     <title>Notas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
   <body>
-    <button>Adicionar</button>
-    <table class = "cabecalho_notas">
-      <tr >
-        <th>Id</th>
-        <th>ValorNota</th>
-        <th>Trabalho</th>
-        <th>Aluno</th>
-        <th>Açoes</th>
-      </tr>
+    <h1 class ="cabecalho_notas">Notas</h1>
+    
+    <table class ="table" id = "cabecalho_notas">
+      <thead>
+        <tr class="table-dark"> 
+          <th >Id</th>
+          <th>ValorNota</th>
+          <th>Trabalho</th>
+          <th>Aluno</th>
+          <th>Açoes</th>
+        </tr>
+      </thead>
+      <tbody id = "linha_nota">
 
+      </tbody>
     </table>
+    <form style="display: none;" id="formularioNotas" class="formulario_editar" action="" method="POST">
 
+      <label for="GET-name">Id:<span id="id_span"></span></label>
+      <input type="hidden" class="id_input" type="text" name="name">
+
+      <label for="GET-valor_nota">ValorNota:</label>
+      <input class="nota_input" type="number" name="nota">
+
+      <label for="GET-Trabalho">Trabalho:</label>
+      <input class="trabalho_input" type="text" name="Trabalho">
+
+      <label for="GET-Aluno">Aluno:</label>
+      <input class="aluno_input" type="text" name="Aluno">
+
+      <button type="submit" class="btn btn-success botao_salvar">Salvar</button>
+    </form>
+    <button class="btn btn-outline-primary" id="botao_adicionar">Adicionar</button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>  
   </body>
   <script src="../javascript/notas.js"></script>
+  <script src="../javascript/Utilitarios.js"></script>
 </html>

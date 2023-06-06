@@ -5,21 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Cursos</title>
   </head>
+  <h1 class ="cabecalho_alunos">Cursos</h1>
   <body>
-    <button>Adicionar</button>
-    <table class = "cabecalho_cursos">
-      <tr >
-        <th>Id</th>
-        <th>Nome</th>
-        <th>CargaHoraria</th>
-        <th>Ativo</th>
-        <th>Açoes</th>
-      </tr>
-
+    <table class ="table" id ="cabecalho_cursos">
+      <thead>
+        <tr class="table-dark">
+          <th>Id</th>
+          <th>Nome</th>
+          <th>CargaHoraria</th>
+          <th>Ativo</th>
+          <th>Açoes</th>
+        </tr>
+    </thead>
+    <tbody id = "linha_curso">
+      
+    </tbody>
     </table>
+    <form style="display: none;" id="formularioCurso" class="formulario_editar" action="" method="POST">
+      <label for="GET-name">Id:<span id="id_span"></span></label>
+      <input type="hidden" class="id_input" type="text" name="name">
 
+      <label for="GET-name">Nome:</label>
+      <input class="nome_input" type="text" name="name">
+
+      <label for="GET-CargaHoraria">CargaHoraria:</label>
+      <input class="carga_horaria_input" type="text" name="CargaHoraria">
+
+      <label for="GET-ativo">Ativo:</label>
+      <input class="ativo_input" type="text" name="Ativo">
+
+      <button type="submit" class="btn btn-success botao_salvar">Salvar</button>
+    </form>
+    <button class="btn btn-outline-primary" id="botao_adicionar">Adicionar</button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>  
+  </form>
   </body>
   <script src="../javascript/cursos.js"></script>
+  <script src="../javascript/Utilitarios.js"></script>
 </html>

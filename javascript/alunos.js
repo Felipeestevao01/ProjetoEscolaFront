@@ -1,35 +1,14 @@
 window.onload = async function (e) {
-  let url = "http://localhost:8001/aluno";
+  let url = "http://localhost:8001/alunos";
   let response = await fetch(url);
   let alunos = await response.json();
-  
-  function formatarDataHoraBrasileira(dataHoraString) {
-    let dataHora = new Date(dataHoraString);
-  
-    let dia = dataHora.getDate();
-    let mes = dataHora.getMonth() + 1;
-    let ano = dataHora.getFullYear();
-    let horas = dataHora.getHours();
-    let minutos = dataHora.getMinutes();
-  
-    // Formatação com zero à esquerda para valores menores que 10
-    dia = dia < 10 ? '0' + dia : dia;
-    mes = mes < 10 ? '0' + mes : mes;
-    horas = horas < 10 ? '0' + horas : horas;
-    minutos = minutos < 10 ? '0' + minutos : minutos;
-  
-    let dataFormatada = dia + '/' + mes + '/' + ano;
-    let horaFormatada = horas + ':' + minutos;
-  
-    return dataFormatada + ' ' + horaFormatada;
-  }
 
   alunos.forEach(alunoAtual => {
-    // ---- Pegando os alunos da response e criando a linha ---- //
+    // ---- Criando a linha do aluno ---- //
     let linhaAluno = document.createElement("tr");
 
-    // ---- Separando a data da hora ----//
-    let dataNascimentoConvertida = alunoAtual.DataAniversario ? formatarDataHoraBrasileira(alunoAtual.DataAniversario).split(" ")[0] : ""
+    // ---- Separando a data da hora ---- //
+    let dataNascimentoConvertida = alunoAtual.DataAniversario.split("T")[0]
     
     // ---- Criando as colunas ---- //
     let tdId = document.createElement("td");
@@ -41,11 +20,6 @@ window.onload = async function (e) {
     let tdEmail = document.createElement("td");
     let tdNumeroFaltas = document.createElement("td");
     let tdAcoes = document.createElement("td");
-
-    // ---- Adicionando atributos ---- //
-    linhaAluno.classList.add("tr_linha")
-    //tdId.setAttribute("")
-    tdNome.classList.add("td_nome")
 
     // ---- Pegando os valores do BD ---- //
     tdId.innerHTML = alunoAtual.Id;
@@ -84,10 +58,10 @@ window.onload = async function (e) {
       // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
       let tr = this.parentNode.parentNode;
       let id = tr.children[0].innerHTML;
-      let urlAluno = `http://localhost:8001/aluno/${id}`;
+      let urlAluno = `http://localhost:8001/alunos/${id}`;
       let responseAluno = await fetch(urlAluno);
       let aluno = await responseAluno.json();
-      let dataAniversarioConvertida = formatarDataHoraBrasileira(alunoAtual.DataAniversario).split(" ")[0];
+      let dataAniversarioConvertida = alunoAtual.DataAniversario.split("T")[0]
 
       // ---- Deixar o formulário de editar Visivel ---- //
       let formularioAlunos = document.querySelector("#formularioAlunos");
@@ -130,11 +104,11 @@ window.onload = async function (e) {
       event.preventDefault();
       linhaAluno.remove();
       alunoObjetoJson = JSON.stringify(alunoAtual);
-      let urlDeletarAluno = `http://localhost:8001/aluno/delete`;
+      let urlDeletarAluno = `http://localhost:8001/alunos`;
       let responseObj = await fetch(urlDeletarAluno, {
         method: "DELETE",
         body: alunoObjetoJson,
-      });
+        });
     });
   });
 };
@@ -157,7 +131,7 @@ formularioAlunos.addEventListener("submit", async function (event) {
     NumeroFaltas: document.querySelector(".numerofaltas_input").value,
   };
   let alunoObjetoJson = JSON.stringify(aluno);
-  let urlAtualizarAluno = `http://localhost:8001/aluno/${id}/edit`;
+  let urlAtualizarAluno = `http://localhost:8001/alunos`;
   let responseObj = await fetch(urlAtualizarAluno, {
     method: "POST",
     body: alunoObjetoJson,

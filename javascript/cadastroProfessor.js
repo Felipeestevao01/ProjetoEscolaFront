@@ -12,9 +12,9 @@ let telefoneCadastro = document.getElementById("cpfCadastro").value;
 let cpfCadastro = document.getElementById("cpfCadastro").value;
 let enderecoCadastro = document.getElementById("enderecoCadastro").value;
 let emailCadastro = document.getElementById("emailCadastro").value;
-let numeroFaltasCadastro = document.getElementById("numeroFaltasCadastro").value;
+let salarioCadastro = document.getElementById("salarioCadastro").value;
 
-let alunoObj = {
+let professorObj = {
     dataAniversario: dataNascimentoCadastro,
     nome: nomeCadastro,
     sobrenome: sobrenomeCadastro,
@@ -22,15 +22,15 @@ let alunoObj = {
     cpf: cpfCadastro,
     endereco: enderecoCadastro,
     email: emailCadastro,
-    numeroFaltas: numeroFaltasCadastro
+    salario: salarioCadastro
 }
 
-let alunoObjetoJson = JSON.stringify(alunoObj)
+let professorObjetoJson = JSON.stringify(professorObj)
 
-let urlNovoAluno = `http://localhost:8001/alunos`
+let urlNovoAluno = `http://localhost:8001/professores`
 let responseObj = await fetch(urlNovoAluno, {
   method: 'POST',
-  body: alunoObjetoJson
+  body: professorObjetoJson
 });
 let jsonObj = await responseObj.json()
 })
