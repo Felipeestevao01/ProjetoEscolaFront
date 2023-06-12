@@ -1,20 +1,20 @@
 
-// Cadastro de Aluno
+// ---- Seleciona o cadastro ---- //
 let formularioCadastro = document.getElementById("formularioCadastro");
 
+// ---- Pegando os valores do Formulario ---- //
 formularioCadastro.addEventListener("submit", async function(event){
-  event.preventDefault(); // Evita o envio padrão do formulár
+  let nomeCadastro = document.getElementById("nome_cadastro").value;
+  let sobrenomeCadastro = document.getElementById("sobrenome_cadastro").value;
+  let dataNascimentoCadastro = document.getElementById("data_nascimento_cadastro").value;
+  let telefoneCadastro = document.getElementById("telefone_cadastro").value;
+  let cpfCadastro = document.getElementById("cpf_cadastro").value;
+  let enderecoCadastro = document.getElementById("endereco_cadastro").value;
+  let emailCadastro = document.getElementById("email_cadastro").value;
+  let numeroFaltasCadastro = document.getElementById("numero_faltas_cadastro").value;
 
-let nomeCadastro = document.getElementById("nomeCadastro").value;
-let sobrenomeCadastro = document.getElementById("sobrenomeCadastro").value;
-let dataNascimentoCadastro = document.getElementById("dataNascimentoCadastro").value;
-let telefoneCadastro = document.getElementById("cpfCadastro").value;
-let cpfCadastro = document.getElementById("cpfCadastro").value;
-let enderecoCadastro = document.getElementById("enderecoCadastro").value;
-let emailCadastro = document.getElementById("emailCadastro").value;
-let numeroFaltasCadastro = document.getElementById("numeroFaltasCadastro").value;
-
-let alunoObj = {
+  // ---- Criando o Objeto e transformando em JSON ---- //
+  let alunoObj = {
     dataAniversario: dataNascimentoCadastro,
     nome: nomeCadastro,
     sobrenome: sobrenomeCadastro,
@@ -23,14 +23,14 @@ let alunoObj = {
     endereco: enderecoCadastro,
     email: emailCadastro,
     numeroFaltas: numeroFaltasCadastro
-}
+  };
+  let alunoObjetoJson = JSON.stringify(alunoObj);
 
-let alunoObjetoJson = JSON.stringify(alunoObj)
-
-let urlNovoAluno = `http://localhost:8001/alunos`
-let responseObj = await fetch(urlNovoAluno, {
-  method: 'POST',
-  body: alunoObjetoJson
+  // ---- Cadastrando o aluno no banco ---- //
+  let urlNovoAluno = `http://localhost:8001/alunos`
+  let responseObj = await fetch(urlNovoAluno, {
+    method: 'POST',
+    body: alunoObjetoJson
+  });
+  let jsonObj = await responseObj.json()
 });
-let jsonObj = await responseObj.json()
-})

@@ -24,22 +24,19 @@ window.onload = async function (e) {
     linhaQuestao.appendChild(tdEscolhas);
     linhaQuestao.appendChild(tdAcoes);
 
-    // ---- Inserindo os alunos na tabela ---- //
-    let tabelaQuestoes = document.querySelector("#linha_descricao");
+    // ---- Inserindo as questoes na tabela ---- //
+    let tabelaQuestoes = document.querySelector("#tabela_questao");
     tabelaQuestoes.appendChild(linhaQuestao);
 
     // ---- Criando o botão de Editar ---- //
     let botaoEditar = document.createElement("button");
     botaoEditar.innerText = "Editar";
-    botaoEditar.classList.add("botao_editar");
-    botaoEditar.classList.add("btn");
-    botaoEditar.classList.add("btn-primary");
-    botaoEditar.classList.add("btn-sm");
+    botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
     tdAcoes.appendChild(botaoEditar);
     botaoEditar.addEventListener("click", async function (event) {
       // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
-      let tr = this.parentNode.parentNode;
-      let id = tr.children[0].innerHTML;
+      let trSelecionada = this.parentNode.parentNode;
+      let id = trSelecionada.children[0].innerHTML;
       let urlQuestao = `http://localhost:8001/questoes/${id}`;
       let responseQuestao = await fetch(urlQuestao);
       let questao = await responseQuestao.json();
@@ -64,13 +61,10 @@ window.onload = async function (e) {
     // ---- Criando o botão Deletar ---- //
     let botaoDeletar = document.createElement("button");
     botaoDeletar.innerText = "Deletar";
-    botaoDeletar.classList.add("botao_deletar");
-    botaoDeletar.classList.add("btn");
-    botaoDeletar.classList.add("btn-danger");
-    botaoDeletar.classList.add("btn-sm");
+    botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
     tdAcoes.appendChild(botaoDeletar);
 
-    // ----- Função no botão para deletar o aluno selecionado ---- //
+    // ----- Função no botão para deletar a questão selecionado ---- //
     botaoDeletar.addEventListener("click", async function (event) {
       event.preventDefault();
       linhaQuestao.remove();
@@ -99,7 +93,7 @@ formularioQuestoes.addEventListener("submit", async function (event) {
     let questaoObjetoJson = JSON.stringify(questao);
     let urlAtualizarQuestao = `http://localhost:8001/questoes`;
     let responseObj = await fetch(urlAtualizarQuestao, {
-      method: "POST",
+      method: "PUT",
       body: questaoObjetoJson,
     });
     let linhasQuestoes = document.querySelectorAll('tr')

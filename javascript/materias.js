@@ -17,43 +17,40 @@ window.onload = async function (e) {
         let tdAcoes = document.createElement("td");
 
         // ---- Pegando os valores do BD ---- //
-        tdId.innerHTML = materiaAtual.Id
-        tdNome.innerHTML = materiaAtual.Nome
-        tdCargaHoraria.innerHTML = materiaAtual.CargaHoraria
-        tdCursos.innerHTML = materiaAtual.Cursos
-        tdProfessores.innerHTML = materiaAtual.Professores
+        tdId.innerHTML = materiaAtual.Id;
+        tdNome.innerHTML = materiaAtual.Nome;
+        tdCargaHoraria.innerHTML = materiaAtual.CargaHoraria;
+        tdCursos.innerHTML = materiaAtual.Cursos;
+        tdProfessores.innerHTML = materiaAtual.Professores;
 
         // ---- Inserindo os valores nas celulas ---- //
-        linhaMateria.appendChild(tdId)
-        linhaMateria.appendChild(tdNome)
-        linhaMateria.appendChild(tdCargaHoraria)
-        linhaMateria.appendChild(tdCursos)
-        linhaMateria.appendChild(tdProfessores)
-        linhaMateria.appendChild(tdAcoes)
+        linhaMateria.appendChild(tdId);
+        linhaMateria.appendChild(tdNome);
+        linhaMateria.appendChild(tdCargaHoraria);
+        linhaMateria.appendChild(tdCursos);
+        linhaMateria.appendChild(tdProfessores);
+        linhaMateria.appendChild(tdAcoes);
 
         // ---- Inserindo as materias na tabela ---- //
-        let tabelaMateria = document.querySelector("#linha_materia");
-        tabelaMateria.appendChild(linhaMateria)
+        let tabelaMateria = document.querySelector("#tabela_materia");
+        tabelaMateria.appendChild(linhaMateria);
 
         // ---- Criando o botão de Editar ---- //
         let botaoEditar = document.createElement("button");
         botaoEditar.innerText = "Editar";
-        botaoEditar.classList.add("botao_editar");
-        botaoEditar.classList.add("btn")
-        botaoEditar.classList.add("btn-primary")
-        botaoEditar.classList.add("btn-sm")
+        botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
         tdAcoes.appendChild(botaoEditar);
         botaoEditar.addEventListener("click", async function (event) {
             // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
-            let tr = this.parentNode.parentNode;
-            let id = tr.children[0].innerHTML;
+            let trSelecionado = this.parentNode.parentNode;
+            let id = trSelecionado.children[0].innerHTML;
             let urlMateria = `http://localhost:8001/materias/${id}`;
             let responseMateria = await fetch(urlMateria);
             let materia = await responseMateria.json();
       
             // ---- Deixar o formulário de editar Visivel ---- //
-            let formularioMaterias = document.querySelector("#formularioMaterias");
-            formularioMaterias.removeAttribute("style");
+            let formularioEditar = document.querySelector("#formularioEditar");
+            formularioEditar.removeAttribute("style");
       
             // ---- Selecionando as células ---- //
             let idInput = document.querySelector(".id_input");
@@ -70,15 +67,12 @@ window.onload = async function (e) {
             cargaHorariaInput.value = materia.CargaHoraria;
             cursoInput.value = materia.Cursos[0].Nome;
             professorInput.value = materia.Professores;
-          });
+        });
 
         // ---- Criando o botão Deletar ---- //
         let botaoDeletar = document.createElement("button");
         botaoDeletar.innerText = "Deletar";
-        botaoDeletar.classList.add("botao_deletar");
-        botaoDeletar.classList.add("btn")
-        botaoDeletar.classList.add("btn-danger")
-        botaoDeletar.classList.add("btn-sm")
+        botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
         tdAcoes.appendChild(botaoDeletar);
 
         // ----- Função no botão para deletar a materia selecionada ---- //
@@ -96,10 +90,10 @@ window.onload = async function (e) {
 };
 
 // ---- Selecionando o formulário editar ---- //
-let formularioMaterias = document.querySelector("#formularioMaterias");
+let formularioEditar = document.querySelector("#formularioEditar");
 
 // ---- Função para atualizar a materia selecionado ---- //
-formularioMaterias.addEventListener("submit", async function (event) {
+formularioEditar.addEventListener("submit", async function (event) {
   event.preventDefault();
   let id = this[0].value;
   let materia = {
@@ -112,7 +106,7 @@ formularioMaterias.addEventListener("submit", async function (event) {
   let materiaObjetoJson = JSON.stringify(materia);
   let urlAtualizarMateria = `http://localhost:8001/materias`;
   let responseObj = await fetch(urlAtualizarMateria, {
-    method: "POST",
+    method: "PUT",
     body: materiaObjetoJson,
   });
   let LinhasMaterias = document.querySelectorAll('tr')
@@ -128,11 +122,8 @@ formularioMaterias.addEventListener("submit", async function (event) {
     }
   });
 
-// Selecionando o botão adicionar.
+// ---- Botão para enviar para o Cadastro ---- //
 let botaoAdicionar = document.getElementById("botao_adicionar");
-
-// Adiciona o evento de clique ao botão
 botaoAdicionar.addEventListener("click", function () {
-  // Redireciona para a nova página
   window.location.href = "cadastroMateria.html";
 });

@@ -15,41 +15,38 @@ window.onload = async function (e) {
         let tdAcoes = document.createElement("td");
 
         // ---- Pegando os valores do BD ---- //
-        tdId.innerHTML = cursoAtual.Id
-        tdNome.innerHTML = cursoAtual.Nome
-        tdCargaHoraria.innerHTML = cursoAtual.CargaHoraria 
-        tdAtivo.innerHTML = cursoAtual.Ativo
+        tdId.innerHTML = cursoAtual.Id;
+        tdNome.innerHTML = cursoAtual.Nome;
+        tdCargaHoraria.innerHTML = cursoAtual.CargaHoraria ;
+        tdAtivo.innerHTML = cursoAtual.Ativo;
 
         // ---- Inserindo os valores nas celulas ---- //
-        linhaCurso.appendChild(tdId)
-        linhaCurso.appendChild(tdNome)
-        linhaCurso.appendChild(tdCargaHoraria)
-        linhaCurso.appendChild(tdAtivo)
-        linhaCurso.appendChild(tdAcoes)
+        linhaCurso.appendChild(tdId);
+        linhaCurso.appendChild(tdNome);
+        linhaCurso.appendChild(tdCargaHoraria);
+        linhaCurso.appendChild(tdAtivo);
+        linhaCurso.appendChild(tdAcoes);
 
         // ---- Inserindo os cursos na tabela ---- //
-        let tabelaCurso = document.querySelector("#linha_curso");
-        tabelaCurso.appendChild(linhaCurso)
+        let tabelaCurso = document.querySelector("#tabela_curso");
+        tabelaCurso.appendChild(linhaCurso);
 
          // ---- Criando o botão de Editar ---- //
         let botaoEditar = document.createElement("button");
         botaoEditar.innerText = "Editar";
-        botaoEditar.classList.add("botao_editar");
-        botaoEditar.classList.add("btn")
-        botaoEditar.classList.add("btn-primary")
-        botaoEditar.classList.add("btn-sm")
+        botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
         tdAcoes.appendChild(botaoEditar);
         botaoEditar.addEventListener("click", async function (event) {
             // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
-            let tr = this.parentNode.parentNode;
-            let id = tr.children[0].innerHTML;
+            let trSelecionada = this.parentNode.parentNode;
+            let id = trSelecionada.children[0].innerHTML;
             let urlCurso = `http://localhost:8001/cursos/${id}`;
             let responseCurso = await fetch(urlCurso);
             let curso = await responseCurso.json();
 
             // ---- Deixar o formulário de editar Visivel ---- //
-            let formularioCursos = document.querySelector("#formularioCurso");
-            formularioCursos.removeAttribute("style");
+            let formularioEditar = document.querySelector("#formularioEditar");
+            formularioEditar.removeAttribute("style");
       
             // ---- Selecionando as células ---- //
             let idInput = document.querySelector(".id_input");
@@ -69,10 +66,7 @@ window.onload = async function (e) {
         // ---- Criando o botão Deletar ---- //
         let botaoDeletar = document.createElement("button");
         botaoDeletar.innerText = "Deletar";
-        botaoDeletar.classList.add("botao_deletar");
-        botaoDeletar.classList.add("btn")
-        botaoDeletar.classList.add("btn-danger")
-        botaoDeletar.classList.add("btn-sm")
+        botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
         tdAcoes.appendChild(botaoDeletar);
 
         // ----- Função no botão para deletar o curso selecionado ---- //
@@ -83,16 +77,16 @@ window.onload = async function (e) {
         let urlDeletarCurso = `http://localhost:8001/cursos`;
         let responseObj = await fetch(urlDeletarCurso, {
           method: "DELETE",
-          body: cursoObjetoJson,
+          body: cursoObjetoJson
         });
       });
     })
 };
 
 // ---- Selecionando o formulário editar ---- //
-let formularioCursos = document.querySelector("#formularioCurso");
+let formularioEditar = document.querySelector("#formularioEditar");
 
-formularioCursos.addEventListener("submit", async function (event){
+formularioEditar.addEventListener("submit", async function (event){
     event.preventDefault();
     let id = this[0].value;
     let curso = {
@@ -104,26 +98,23 @@ formularioCursos.addEventListener("submit", async function (event){
     let cursoObjetoJson = JSON.stringify(curso);
     let urlAtualizarCurso = `http://localhost:8001/cursos`;
     let responseObj = await fetch(urlAtualizarCurso, {
-        method: "POST",
+        method: "PUT",
         body: cursoObjetoJson,
     });
     let LinhasCursos = document.querySelectorAll('tr')
     for(i = 0 ; i < LinhasCursos.length; i++){
         let idCurso = LinhasCursos[i].children[0].innerHTML
         if(id == idCurso){
-            LinhasCursos[i].children[1].innerHTML = curso.Nome
-            LinhasCursos[i].children[2].innerHTML = curso.CargaHoraria
-            LinhasCursos[i].children[3].innerHTML = curso.Ativo
+            LinhasCursos[i].children[1].innerHTML = curso.Nome;
+            LinhasCursos[i].children[2].innerHTML = curso.CargaHoraria;
+            LinhasCursos[i].children[3].innerHTML = curso.Ativo;
             break;
         }
     }
 });
 
-// Selecionando o botão adicionar.
+// ---- Botão para enviar para o Cadastro ---- //
 let botaoAdicionar = document.getElementById("botao_adicionar");
-
-// Adiciona o evento de clique ao botão
 botaoAdicionar.addEventListener("click", function () {
-  // Redireciona para a nova página
   window.location.href = "cadastroCurso.html";
 });

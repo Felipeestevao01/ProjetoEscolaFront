@@ -8,7 +8,7 @@ window.onload = async function (e) {
     let linhaAluno = document.createElement("tr");
 
     // ---- Separando a data da hora ---- //
-    let dataNascimentoConvertida = alunoAtual.DataAniversario.split("T")[0]
+    let dataNascimentoConvertida = alunoAtual.DataAniversario.split("T")[0];
     
     // ---- Criando as colunas ---- //
     let tdId = document.createElement("td");
@@ -43,29 +43,26 @@ window.onload = async function (e) {
     linhaAluno.appendChild(tdAcoes);
 
     // ---- Inserindo os alunos na tabela ---- //
-    let tabelaAluno = document.querySelector("#linha_aluno");
+    let tabelaAluno = document.querySelector("#tabela_aluno");
     tabelaAluno.appendChild(linhaAluno);
 
     // ---- Criando o botão de Editar ---- //
     let botaoEditar = document.createElement("button");
     botaoEditar.innerText = "Editar";
-    botaoEditar.classList.add("botao_editar");
-    botaoEditar.classList.add("btn")
-    botaoEditar.classList.add("btn-primary")
-    botaoEditar.classList.add("btn-sm")
+    botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
     tdAcoes.appendChild(botaoEditar);
     botaoEditar.addEventListener("click", async function (event) {
       // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
-      let tr = this.parentNode.parentNode;
-      let id = tr.children[0].innerHTML;
+      let trSelecionada = this.parentNode.parentNode;
+      let id = trSelecionada.children[0].innerHTML;
       let urlAluno = `http://localhost:8001/alunos/${id}`;
       let responseAluno = await fetch(urlAluno);
       let aluno = await responseAluno.json();
-      let dataAniversarioConvertida = alunoAtual.DataAniversario.split("T")[0]
+      let dataAniversarioConvertida = alunoAtual.DataAniversario.split("T")[0];
 
       // ---- Deixar o formulário de editar Visivel ---- //
-      let formularioAlunos = document.querySelector("#formularioAlunos");
-      formularioAlunos.removeAttribute("style");
+      let formularioEditar = document.querySelector("#formularioEditar");
+      formularioEditar.removeAttribute("style");
 
       // ---- Selecionando as células ---- //
       let idInput = document.querySelector(".id_input");
@@ -76,7 +73,7 @@ window.onload = async function (e) {
       let cpfInput = document.querySelector(".cpf_input");
       let enderecoInput = document.querySelector(".endereco_input");
       let emailInput = document.querySelector(".email_input");
-      let numeroFaltasInput = document.querySelector(".numerofaltas_input");
+      let numeroFaltasInput = document.querySelector(".numero_faltas_input");
 
       // ---- Inserindo valores nas celulas do formulário de editar ---- //
       idInput.value = aluno.Id;
@@ -93,10 +90,7 @@ window.onload = async function (e) {
     // ---- Criando o botão Deletar ---- //
     let botaoDeletar = document.createElement("button");
     botaoDeletar.innerText = "Deletar";
-    botaoDeletar.classList.add("botao_deletar");
-    botaoDeletar.classList.add("btn")
-    botaoDeletar.classList.add("btn-danger")
-    botaoDeletar.classList.add("btn-sm")
+    botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
     tdAcoes.appendChild(botaoDeletar);
 
     // ----- Função no botão para deletar o aluno selecionado ---- //
@@ -108,16 +102,16 @@ window.onload = async function (e) {
       let responseObj = await fetch(urlDeletarAluno, {
         method: "DELETE",
         body: alunoObjetoJson,
-        });
+      });
     });
   });
 };
 
 // ---- Selecionando o formulário editar ---- //
-let formularioAlunos = document.querySelector("#formularioAlunos");
+let formularioEditar = document.querySelector("#formularioEditar");
 
 // ---- Função para atualizar o aluno selecionado ---- //
-formularioAlunos.addEventListener("submit", async function (event) {
+formularioEditar.addEventListener("submit", async function (event) {
   event.preventDefault();
   let id = this[0].value;
   let aluno = {
@@ -128,35 +122,33 @@ formularioAlunos.addEventListener("submit", async function (event) {
     Cpf: document.querySelector(".cpf_input").value,
     Endereco: document.querySelector(".endereco_input").value,
     Email: document.querySelector(".email_input").value,
-    NumeroFaltas: document.querySelector(".numerofaltas_input").value,
+    NumeroFaltas: document.querySelector(".numero_faltas_input").value
   };
   let alunoObjetoJson = JSON.stringify(aluno);
   let urlAtualizarAluno = `http://localhost:8001/alunos`;
   let responseObj = await fetch(urlAtualizarAluno, {
-    method: "POST",
-    body: alunoObjetoJson,
+    method: "PUT",
+    body: alunoObjetoJson
   });
   let LinhasAlunos = document.querySelectorAll('tr')
+  // ---- Percorrer as linhas e atualizar a linha selecionada ---- //
   for(i = 0 ; i < LinhasAlunos.length; i++){
     let idAlunos = LinhasAlunos[i].children[0].innerHTML
     if(id == idAlunos){
-        LinhasAlunos[i].children[1].innerHTML = aluno.Nome
-        LinhasAlunos[i].children[2].innerHTML = aluno.Sobrenome
-        LinhasAlunos[i].children[3].innerHTML = aluno.DataAniversario
-        LinhasAlunos[i].children[4].innerHTML = aluno.Cpf
-        LinhasAlunos[i].children[5].innerHTML = aluno.Endereco
-        LinhasAlunos[i].children[6].innerHTML = aluno.Email
-        LinhasAlunos[i].children[7].innerHTML = aluno.NumeroFaltas
+        LinhasAlunos[i].children[1].innerHTML = aluno.Nome;
+        LinhasAlunos[i].children[2].innerHTML = aluno.Sobrenome;
+        LinhasAlunos[i].children[3].innerHTML = aluno.DataAniversario;
+        LinhasAlunos[i].children[4].innerHTML = aluno.Cpf;
+        LinhasAlunos[i].children[5].innerHTML = aluno.Endereco;
+        LinhasAlunos[i].children[6].innerHTML = aluno.Email;
+        LinhasAlunos[i].children[7].innerHTML = aluno.NumeroFaltas;
         break;
-      }  
+      }
     }
   });
 
-// Selecionando o botão adicionar.
+// ---- Botão para enviar para o Cadastro ---- //
 let botaoAdicionar = document.getElementById("botao_adicionar");
-
-// Adiciona o evento de clique ao botão
 botaoAdicionar.addEventListener("click", function () {
-  // Redireciona para a nova página
   window.location.href = "cadastroAluno.html";
 });

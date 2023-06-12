@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
   <body>
-    <h1 class ="cabecalho_trabalhos">Trabalhos</h1>
+    <h1 class ="titulo">Trabalhos</h1>
     
     <table class ="table" id = "cabecalho_trabalhos">
       <thead>
@@ -22,26 +22,26 @@
           <th>Açoes</th>
         </tr>
       </thead>
-      <tbody id = "linha_trabalho">
+      <tbody id = "tabela_trabalho">
 
       </tbody>
     </table>
-    <form style="display: none;" id="formularioTrabalho" class="formulario_editar" action="" method="POST">
+    <form style="display: none;" id="formularioTrabalho" action="" method="POST">
 
-      <label for="GET-name">Id:<span id="id_span"></span></label>
-      <input type="hidden" class="id_input" type="text" name="name">
+      <label for="GET-id">Id:<span id="id_span"></span></label>
+      <input type="hidden" class="id_input" type="text" name="id">
 
-      <label for="GET-Descricao">Descrição:</label>
+      <label for="GET-descricao">Descrição:</label>
       <input class="descricao_input" type="text" name="descricao">
 
       <label for="GET-dataTrabalho">Data Trabalho:</label>
-      <input class="data_trabalho_input" type="date" name="DataTrabalho">
+      <input class="data_trabalho_input" type="date" name="dataTrabalho">
 
-      <label for="GET-Professor">Professor:</label>
-      <input class="professor_input" type="text" name="Professor">
+      <label for="GET-professor">Professor:</label>
+      <input class="professor_input" type="text" name="professor">
 
-      <label for="GET-Questão">Questão:</label>
-      <input class="questao_input" type="text" name="Questão">
+      <label for="GET-questão">Questão:</label>
+      <input class="questao_input" type="text" name="questão">
 
       <button type="submit" class="btn btn-success botao_salvar">Salvar</button>
     </form>
@@ -49,5 +49,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>  
   </body>
   <script src="../javascript/trabalhos.js"></script>
-  <script src="../javascript/Utilitarios.js"></script>
 </html>

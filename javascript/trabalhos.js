@@ -19,36 +19,33 @@ window.onload = async function (e) {
         let tdAcoes = document.createElement('td');
 
         // ---- Pegando os valores do BD ---- //
-        tdId.innerHTML = trabalhoAtual.Id
-        tdDescricao.innerHTML = trabalhoAtual.Descricao
-        tdDataTrabalho.innerHTML = dataTrabalhoConvertida
-        tdProfessor.innerHTML = trabalhoAtual.Professor.Nome
-        tdQuestoes.innerHTML = trabalhoAtual.Questoes
+        tdId.innerHTML = trabalhoAtual.Id;
+        tdDescricao.innerHTML = trabalhoAtual.Descricao;
+        tdDataTrabalho.innerHTML = dataTrabalhoConvertida;
+        tdProfessor.innerHTML = trabalhoAtual.Professor.Nome;
+        tdQuestoes.innerHTML = trabalhoAtual.Questoes;
 
         // ---- Inserindo os valores nas celulas ---- //
-        linhaTrabalho.appendChild(tdId)
-        linhaTrabalho.appendChild(tdDescricao)
-        linhaTrabalho.appendChild(tdDataTrabalho)
-        linhaTrabalho.appendChild(tdProfessor)
-        linhaTrabalho.appendChild(tdQuestoes)
-        linhaTrabalho.appendChild(tdAcoes)
+        linhaTrabalho.appendChild(tdId);
+        linhaTrabalho.appendChild(tdDescricao);
+        linhaTrabalho.appendChild(tdDataTrabalho);
+        linhaTrabalho.appendChild(tdProfessor);
+        linhaTrabalho.appendChild(tdQuestoes);
+        linhaTrabalho.appendChild(tdAcoes);
 
         // ---- Inserindo os trabalhos na tabela ---- //
-        let tabelaQuestoes = document.querySelector('#linha_trabalho')
+        let tabelaQuestoes = document.querySelector('#tabela_trabalho')
         tabelaQuestoes.appendChild(linhaTrabalho)
 
         // ---- Criando o botão de Editar ---- //
         let botaoEditar = document.createElement('button');
         botaoEditar.innerText = "Editar";
-        botaoEditar.classList.add("botao_editar");
-        botaoEditar.classList.add("btn")
-        botaoEditar.classList.add("btn-primary")
-        botaoEditar.classList.add("btn-sm")
+        botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
         tdAcoes.appendChild(botaoEditar)
         botaoEditar.addEventListener("click", async function (event) {
             // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
-            let tr = this.parentNode.parentNode;
-            let id = tr.children[0].innerHTML;
+            let trSelecionada = this.parentNode.parentNode;
+            let id = trSelecionada.children[0].innerHTML;
             let urlTrabalho = `http://localhost:8001/trabalhos/${id}`;
             let responseTrabalho = await fetch(urlTrabalho);
             let trabalho = await responseTrabalho.json();
@@ -73,16 +70,12 @@ window.onload = async function (e) {
             dataTrabalhoInput.value = dataAniversarioConvertida;
             professorInput.value = trabalho.Professor;
             questaoInput.value = trabalho.Questoes;
-          });
+        });
 
-
-
+        // ---- Criando o botão Deletar ---- //
         let botaoDeletar = document.createElement('button');
         botaoDeletar.innerText = "Deletar";
-        botaoDeletar.classList.add("botao_deletar");
-        botaoDeletar.classList.add("btn")
-        botaoDeletar.classList.add("btn-danger")
-        botaoDeletar.classList.add("btn-sm")
+        botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
         tdAcoes.appendChild(botaoDeletar)
 
             // ----- Função no botão para deletar o aluno selecionado ---- //
@@ -96,7 +89,7 @@ window.onload = async function (e) {
           body: trabalhoObjetoJson,
           });
         });
-    });
+      });
 }
 
 // ---- Selecionando o formulário editar ---- //
@@ -116,7 +109,7 @@ formularioTrabalho.addEventListener("submit", async function (event) {
     let trabalhoObjetoJson = JSON.stringify(trabalho);
     let urlAtualizarTrabalho = `http://localhost:8001/trabalhos`;
     let responseObj = await fetch(urlAtualizarTrabalho, {
-      method: "POST",
+      method: "PUT",
       body: trabalhoObjetoJson,
     });
     let LinhasTrabalhos = document.querySelectorAll('tr')

@@ -46,16 +46,13 @@ window.onload = async function (e) {
          linhaProfessor.appendChild(tdAcoes)
 
         // ---- Inserindo os professores na tabela ---- //
-         let tabelaProfessores = document.querySelector('#linha_professor')
+         let tabelaProfessores = document.querySelector('#tabela_professor')
          tabelaProfessores.appendChild(linhaProfessor)
 
          // ---- Criando o botao editar ---- //
          let botaoEditar = document.createElement('button')
          botaoEditar.innerText = "Editar"
-         botaoEditar.classList.add("botao_editar");
-         botaoEditar.classList.add("btn")
-         botaoEditar.classList.add("btn-primary")
-         botaoEditar.classList.add("btn-sm")
+         botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
          tdAcoes.appendChild(botaoEditar)
          botaoEditar.addEventListener("click", async function (event){
             // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
@@ -65,8 +62,8 @@ window.onload = async function (e) {
             let responseProfessor = await fetch(urlProfessor);
             let professor = await responseProfessor.json();
             // ---- Deixar o formulário de editar Visivel ---- //
-            let formularioProfessores = document.querySelector("#formularioProfessor");
-            formularioProfessores.removeAttribute("style");
+            let formularioEditar = document.querySelector("#formularioEditar");
+            formularioEditar.removeAttribute("style");
 
             // ---- Selecionando as células ---- //
             let idInput = document.querySelector(".id_input");
@@ -96,10 +93,7 @@ window.onload = async function (e) {
         // ---- Criando o botão Deletar ---- //
          let botaoDeletar = document.createElement('button')
          botaoDeletar.innerText = "Deletar"
-         botaoDeletar.classList.add("botao_deletar");
-         botaoDeletar.classList.add("btn")
-         botaoDeletar.classList.add("btn-danger")
-         botaoDeletar.classList.add("btn-sm")
+         botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
          tdAcoes.appendChild(botaoDeletar)
 
 
@@ -118,10 +112,10 @@ window.onload = async function (e) {
   };
 
   // ---- Selecionando o formulário editar ---- //
-let formularioProfessores = document.querySelector("#formularioProfessor");
+let formularioEditar = document.querySelector("#formularioEditar");
 
 // ---- Função para atualizar o professor selecionado ---- //
-formularioProfessores.addEventListener("submit", async function (event){
+formularioEditar.addEventListener("submit", async function (event){
     event.preventDefault();
     let id = this[0].value;
     let professor = {

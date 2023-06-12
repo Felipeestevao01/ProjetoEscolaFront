@@ -1,28 +1,28 @@
 
-// Cadastro de Materia
+// ---- Seleciona o cadastro ---- //
 let formularioCadastro = document.getElementById("formularioCadastro");
 
+// ---- Pegando os valores do Formulario ---- //
 formularioCadastro.addEventListener("submit", async function(event){
-  event.preventDefault(); // Evita o envio padrão do formulár
+  let nomeCadastro = document.getElementById("nome_cadastro").value;
+  let cargaHorariaCadastro = document.getElementById("carga_horaria_cadastro").value;
+  let cursoCadastro = document.getElementById("curso_cadastro").value;
+  let professorCadastro = document.getElementById("professor_cadastro").value;
 
-let nomeCadastro = document.getElementById("nomeCadastro").value;
-let cargaHorariaCadastro = document.getElementById("cargaHorariaCadastro").value;
-let cursoCadastro = document.getElementById("cursoCadastro").value;
-let professorCadastro = document.getElementById("professorCadastro").value;
-
-let materiaObj = {
+  // ---- Criando o Objeto e transformando em JSON ---- //
+  let materiaObj = {
     nome: nomeCadastro,
     cargaHoraria: cargaHorariaCadastro,
     Cursos: cursoCadastro,
     Professores: professorCadastro
-}
+  }
+  let materiaObjetoJson = JSON.stringify(materiaObj)
 
-let materiaObjetoJson = JSON.stringify(materiaObj)
-
-let urlNovaMateria = `http://localhost:8001/materias`
-let responseObj = await fetch(urlNovaMateria, {
-  method: 'POST',
-  body: materiaObjetoJson
+  // ---- Cadastrando a materia no banco ---- //
+  let urlNovaMateria = `http://localhost:8001/materias`
+  let responseObj = await fetch(urlNovaMateria, {
+    method: 'POST',
+    body: materiaObjetoJson
+  });
+  let jsonObj = await responseObj.json()
 });
-let jsonObj = await responseObj.json()
-})

@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
   <body>
-    <h1 class ="cabecalho_materias">Materias</h1>
+    <h1 class ="titulo">Materias</h1>
     
     <table class ="table" id = "cabecalho_materias">
       <thead>
@@ -22,26 +22,26 @@
           <th>Açoes</th>
         </tr>
       </thead>
-      <tbody id = "linha_materia">
+      <tbody id = "tabela_materia">
 
       </tbody>
     </table>
-    <form style="display: none;" id="formularioMaterias" class="formulario_editar" action="" method="POST">
+    <form style="display: none;" id="formularioEditar" action="" method="POST">
 
-      <label for="GET-name">Id:<span id="id_span"></span></label>
-      <input type="hidden" class="id_input" type="text" name="name">
+      <label for="GET-id">Id:<span id="id_span"></span></label>
+      <input type="hidden" class="id_input" type="text" name="id">
 
       <label for="GET-name">Nome:</label>
       <input class="nome_input" type="text" name="name">
 
-      <label for="GET-Carga_Horaria">Carga Horaria:</label>
+      <label for="GET-cargaHoraria">Carga Horaria:</label>
       <input class="carga_horaria_input" type="number" name="cargaHoraria">
 
       <label for="GET-curso">Cursos:</label>
-      <input class="curso_input" type="text" name="Curso">
+      <input class="curso_input" type="text" name="curso">
 
       <label for="GET-professor">Professores:</label>
-      <input class="professor_input" type="text" name="Cpf">
+      <input class="professor_input" type="text" name="professor">
 
       <button type="submit" class="btn btn-success botao_salvar">Salvar</button>
     </form>
@@ -49,5 +49,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>  
   </body>
   <script src="../javascript/materias.js"></script>
-  <script src="../javascript/Utilitarios.js"></script>
 </html>

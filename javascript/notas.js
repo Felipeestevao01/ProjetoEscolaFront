@@ -2,6 +2,7 @@ window.onload = async function (e) {
     let url = "http://localhost:8001/notas";
     let response = await fetch(url);
     let notas = await response.json();
+    console.log(notas)
 
     notas.forEach(notaAtual => {
         // ---- Criando a linha da nota ---- //
@@ -34,10 +35,7 @@ window.onload = async function (e) {
         // ---- Criando o botão de Editar ---- //
         let botaoEditar = document.createElement("button");
         botaoEditar.innerText = "Editar";
-        botaoEditar.classList.add("botao_editar");
-        botaoEditar.classList.add("btn")
-        botaoEditar.classList.add("btn-primary")
-        botaoEditar.classList.add("btn-sm")
+        botaoEditar.classList.add("botao_editar", "btn", "btn-primary", "btn-sm");
         tdAcoes.appendChild(botaoEditar);
         botaoEditar.addEventListener("click", async function (event) {
             // ---- Pegando a linha selecionada e o seu ID e convertendo a data ---- //
@@ -48,8 +46,8 @@ window.onload = async function (e) {
             let nota = await responseNota.json();
       
             // ---- Deixar o formulário de editar Visivel ---- //
-            let formularioNotas = document.querySelector("#formularioNotas");
-            formularioNotas.removeAttribute("style");
+            let formularioEditar = document.querySelector("#formularioEditar");
+            formularioEditar.removeAttribute("style");
       
             // ---- Selecionando as células ---- //
             let idInput = document.querySelector(".id_input");
@@ -69,10 +67,7 @@ window.onload = async function (e) {
         // ---- Criando o botão Deletar ---- //
         let botaoDeletar = document.createElement("button");
         botaoDeletar.innerText = "Deletar";
-        botaoDeletar.classList.add("botao_deletar");
-        botaoDeletar.classList.add("btn")
-        botaoDeletar.classList.add("btn-danger")
-        botaoDeletar.classList.add("btn-sm")
+        botaoDeletar.classList.add("botao_deletar", "btn", "btn-danger", "btn-sm");
         tdAcoes.appendChild(botaoDeletar);
         
         // ----- Função no botão para deletar a materia selecionada ---- //
@@ -90,10 +85,10 @@ window.onload = async function (e) {
 };
 
 // ---- Selecionando o formulário editar ---- //
-let formularioNotas = document.querySelector("#formularioNotas");
+let formularioEditar = document.querySelector("#formularioEditar");
 
 // ---- Função para atualizar a materia selecionado ---- //
-formularioNotas.addEventListener("submit", async function (event) {
+formularioEditar.addEventListener("submit", async function (event) {
   event.preventDefault();
   let id = this[0].value;
   let nota = {
@@ -105,7 +100,7 @@ formularioNotas.addEventListener("submit", async function (event) {
   let notaObjetoJson = JSON.stringify(nota);
   let urlAtualizarNota = `http://localhost:8001/notas`;
   let responseObj = await fetch(urlAtualizarNota, {
-    method: "POST",
+    method: "PUT",
     body: notaObjetoJson,
   });
   let LinhasNotas = document.querySelectorAll('tr')
