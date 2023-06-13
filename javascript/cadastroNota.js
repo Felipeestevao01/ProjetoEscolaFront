@@ -16,7 +16,7 @@ formularioCadastro.addEventListener("submit", async function(event){
   let notaObjetoJson = JSON.stringify(notaObj)
 
   // ---- Cadastrando o aluno no banco ---- //
-  let urlNovaNota = `http://localhost:8001/materias`
+  let urlNovaNota = `http://localhost:8001/notas`
   let responseObj = await fetch(urlNovaNota, {
     method: 'POST',
     body: notaObjetoJson

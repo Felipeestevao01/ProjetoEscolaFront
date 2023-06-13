@@ -2,7 +2,6 @@ window.onload = async function (e) {
     let url = "http://localhost:8001/notas";
     let response = await fetch(url);
     let notas = await response.json();
-    console.log(notas)
 
     notas.forEach(notaAtual => {
         // ---- Criando a linha da nota ---- //
@@ -19,7 +18,7 @@ window.onload = async function (e) {
         tdId.innerHTML = notaAtual.Id 
         tdValorNota.innerHTML = notaAtual.ValorNota 
         tdTrabalho.innerHTML = notaAtual.Trabalho.Descricao 
-        tdAluno.innerHTML = notaAtual.Aluno 
+        tdAluno.innerHTML = notaAtual.Aluno
 
         // ---- Inserindo os valores nas celulas ---- //
         linhaNota.appendChild(tdId)
@@ -60,7 +59,7 @@ window.onload = async function (e) {
             idInput.value = nota.Id;
             idSpan.innerHTML = nota.Id;
             valorNotaInput.value = nota.ValorNota;
-            trabalhoInput.value = nota.Trabalho;
+            trabalhoInput.value = nota.Trabalho.Descricao;
             alunoInput.value = nota.Aluno;
           });
 
